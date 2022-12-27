@@ -14,7 +14,6 @@ export const authUser = expressAsyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
-      image: user.image,
       email: user.email,
       isAdmin: user.isAdmin,
       likes: user.likes,
@@ -32,7 +31,7 @@ export const authUser = expressAsyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 export const registerUser = expressAsyncHandler(async (req, res) => {
-  const { name, image, email, password, yourGender, lookingForGender } = req.body;
+  const { name, email, password, yourGender, lookingForGender } = req.body;
 
   const userExists = await User.findOne({ email });
   if (userExists) {
@@ -42,7 +41,6 @@ export const registerUser = expressAsyncHandler(async (req, res) => {
 
   const user = await User.create({
     name,
-    image,
     email,
     password,
     yourGender,
@@ -53,7 +51,6 @@ export const registerUser = expressAsyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       name: user.name,
-      image: user.image,
       email: user.email,
       isAdmin: user.isAdmin,
       yourGender: user.yourGender,
@@ -76,7 +73,6 @@ export const getUserProfile = expressAsyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
-      image: user.image,
       email: user.email,
       isAdmin: user.isAdmin,
       likes: user.likes,
@@ -96,7 +92,6 @@ export const updateUserProfile = expressAsyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
     user.name = req.body.name || user.name;
-    user.image = req.body.image || user.image;
     user.email = req.body.email || user.email;
     user.likes = req.body.likes || user.likes;
     user.yourGender = req.body.yourGender || user.yourGender;
@@ -108,7 +103,6 @@ export const updateUserProfile = expressAsyncHandler(async (req, res) => {
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
-      image: updatedUser.image,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       yourGender: updatedUser.yourGender,
